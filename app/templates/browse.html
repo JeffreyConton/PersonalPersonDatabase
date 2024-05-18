@@ -10,35 +10,54 @@
         <div class="navigation">
             <h2>Navigation</h2>
             <ul>
-                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('add') }}">Add Person</a></li>
             </ul>
         </div>
         <div class="content">
-            <div class="info-list" style="width: 100%;">
-                <h2>People</h2>
-                <form method="get" action="{{ url_for('browse') }}">
-                    <input type="text" name="search" placeholder="Search people..." value="{{ request.args.get('search', '') }}">
-                    <button type="submit">Search</button>
-                </form>
-                <div class="grid-container">
-                    {% for person in people %}
-                        <div class="grid-item">
-                            <h3>{{ person.full_name }}</h3>
-                            <p><strong>Nickname:</strong> {{ person.nickname }}</p>
-                            <p><strong>Gender:</strong> {{ person.gender }}</p>
-                            <p><strong>Occupation:</strong> {{ person.occupation }}</p>
-                            <span class="edit-icon" onclick="editPerson({{ person.id }})">&#9998;</span>
-                        </div>
-                    {% endfor %}
+            <h2>People List</h2>
+            <div class="grid-container">
+                {% for person in people %}
+                <div class="grid-item">
+                    <h3>{{ person.full_name }}</h3>
+                    <p>Nickname: {{ person.nickname }}</p>
+                    <p>Gender: {{ person.gender }}</p>
+                    <p>Date of Birth: {{ person.date_of_birth }}</p>
+                    <p>Place of Birth: {{ person.place_of_birth }}</p>
+                    <p>Nationality: {{ person.nationality }}</p>
+                    <p>Address: {{ person.address }}</p>
+                    <p>Phone Number: {{ person.phone_number }}</p>
+                    <p>Email Address: {{ person.email_address }}</p>
+                    <p>Occupation: {{ person.occupation }}</p>
+                    <p>Company: {{ person.company }}</p>
+                    <p>Job Title: {{ person.job_title }}</p>
+                    <p>Work Address: {{ person.work_address }}</p>
+                    <p>Work Phone Number: {{ person.work_phone_number }}</p>
+                    <p>Work Email Address: {{ person.work_email_address }}</p>
+                    <p>LinkedIn Profile: <a href="{{ person.linkedin_profile }}" target="_blank">{{ person.linkedin_profile }}</a></p>
+                    <p>Marital Status: {{ person.marital_status }}</p>
+                    <p>Spouse's Name: {{ person.spouse_name }}</p>
+                    <p>Children's Names and Ages: {{ person.children_names_ages }}</p>
+                    <p>Hobbies: {{ person.hobbies }}</p>
+                    <p>Interests: {{ person.interests }}</p>
+                    <p>Favorite Books: {{ person.favorite_books }}</p>
+                    <p>Favorite Movies: {{ person.favorite_movies }}</p>
+                    <p>Favorite Music: {{ person.favorite_music }}</p>
+                    <p>Notes: {{ person.notes }}</p>
+                    <p>Social Media Profiles: {{ person.social_media_profiles }}</p>
+                    <p>Date Met: {{ person.date_met }}</p>
+                    <p>Place Met: {{ person.place_met }}</p>
+                    <p>First Impression: {{ person.first_impression }}</p>
+                    <p>How You Met: {{ person.how_you_met }}</p>
+                    <p>Mutual Contacts: {{ person.mutual_contacts }}</p>
+                    <p>Last Meeting Date: {{ person.last_meeting_date }}</p>
+                    <p>Next Meeting Date: {{ person.next_meeting_date }}</p>
+                    <a href="{{ url_for('edit', person_id=person.id) }}" class="edit-icon">Edit</a>
+                    <a href="{{ url_for('delete', person_id=person.id) }}" class="edit-icon">Delete</a>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>
-    <script>
-        function editPerson(personId) {
-            window.location.href = `/edit/${personId}`;
-        }
-    </script>
 </body>
 </html>
