@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browse People</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <h2>Navigation</h2>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('add') }}">Add Person</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="info-list">
+                <h2>People</h2>
+                <form method="get" action="{{ url_for('browse') }}">
+                    <input type="text" name="search" placeholder="Search people..." value="{{ request.args.get('search', '') }}">
+                    <button type="submit">Search</button>
+                </form>
+                <div class="grid-container">
+                    {% for person in people %}
+                        <div class="grid-item">
+                            <h3>{{ person.full_name }}</h3>
+                            <p><strong>Nickname:</strong> {{ person.nickname }}</p>
+                            <p><strong>Gender:</strong> {{ person.gender }}</p>
+                            <p><strong>Occupation:</strong> {{ person.occupation }}</p>
+                            <span class="edit-icon" onclick="editPerson({{ person.id }})">&#9998;</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function editPerson(personId) {
+            window.location.href = `/edit/${personId}`;
+        }
+    </script>
+</body>
+</html>
