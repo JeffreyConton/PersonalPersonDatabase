@@ -58,8 +58,6 @@ body {
     width: 80%;
     padding: 20px;
     overflow-y: auto;
-    display: flex;
-    flex-wrap: wrap;
 }
 
 h2 {
@@ -72,7 +70,6 @@ h2 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
-    width: 100%;
 }
 
 .grid-item {
@@ -154,10 +151,14 @@ button:hover {
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .dropdown-section {
     margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
+    width: 100%;
 }
 
 .dropdown-header {
@@ -188,10 +189,17 @@ button:hover {
     border-radius: 4px;
     margin-top: 10px;
     background-color: #2e2e2e;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .dropdown-content.show {
-    display: block;
+    display: flex;
+}
+
+.form-group {
+    flex: 1 1 calc(50% - 20px);
+    min-width: 250px;
 }
 
 .add-btn {
@@ -206,3 +214,4 @@ button:hover {
 
 .add-btn:hover {
     background-color: #005bb5;
+}
