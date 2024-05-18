@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <h2>Navigation</h2>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('browse') }}">Browse People</a></li>
+                <li><a href="{{ url_for('add') }}">Add Person</a></li>
+                <li><a href="{{ url_for('changelog_view') }}">Changelog</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h2>Welcome to Your Personal Database</h2>
+            <p>This is your personal database for managing information about people you have met. You can browse the list of people, add new entries, and edit existing ones.</p>
+        </div>
+    </div>
+</body>
+</html>

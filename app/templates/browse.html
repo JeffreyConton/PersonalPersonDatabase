@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Browse People</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -12,6 +13,7 @@
             <ul>
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('add') }}">Add Person</a></li>
+                <li><a href="{{ url_for('changelog_view') }}">Changelog</a></li>
             </ul>
         </div>
         <div class="content">
@@ -19,41 +21,46 @@
             <div class="grid-container">
                 {% for person in people %}
                 <div class="grid-item">
+                    <div class="icon-container">
+                        <a href="{{ url_for('edit', person_id=person.id) }}" class="edit-icon"><i class="fas fa-edit"></i></a>
+                        <a href="{{ url_for('delete', person_id=person.id) }}" class="delete-icon"><i class="fas fa-trash-alt"></i></a>
+                    </div>
                     <h3>{{ person.full_name }}</h3>
-                    <p>Nickname: {{ person.nickname }}</p>
-                    <p>Gender: {{ person.gender }}</p>
-                    <p>Date of Birth: {{ person.date_of_birth }}</p>
-                    <p>Place of Birth: {{ person.place_of_birth }}</p>
-                    <p>Nationality: {{ person.nationality }}</p>
-                    <p>Address: {{ person.address }}</p>
-                    <p>Phone Number: {{ person.phone_number }}</p>
-                    <p>Email Address: {{ person.email_address }}</p>
-                    <p>Occupation: {{ person.occupation }}</p>
-                    <p>Company: {{ person.company }}</p>
-                    <p>Job Title: {{ person.job_title }}</p>
-                    <p>Work Address: {{ person.work_address }}</p>
-                    <p>Work Phone Number: {{ person.work_phone_number }}</p>
-                    <p>Work Email Address: {{ person.work_email_address }}</p>
-                    <p>LinkedIn Profile: <a href="{{ person.linkedin_profile }}" target="_blank">{{ person.linkedin_profile }}</a></p>
-                    <p>Marital Status: {{ person.marital_status }}</p>
-                    <p>Spouse's Name: {{ person.spouse_name }}</p>
-                    <p>Children's Names and Ages: {{ person.children_names_ages }}</p>
-                    <p>Hobbies: {{ person.hobbies }}</p>
-                    <p>Interests: {{ person.interests }}</p>
-                    <p>Favorite Books: {{ person.favorite_books }}</p>
-                    <p>Favorite Movies: {{ person.favorite_movies }}</p>
-                    <p>Favorite Music: {{ person.favorite_music }}</p>
-                    <p>Notes: {{ person.notes }}</p>
-                    <p>Social Media Profiles: {{ person.social_media_profiles }}</p>
-                    <p>Date Met: {{ person.date_met }}</p>
-                    <p>Place Met: {{ person.place_met }}</p>
-                    <p>First Impression: {{ person.first_impression }}</p>
-                    <p>How You Met: {{ person.how_you_met }}</p>
-                    <p>Mutual Contacts: {{ person.mutual_contacts }}</p>
-                    <p>Last Meeting Date: {{ person.last_meeting_date }}</p>
-                    <p>Next Meeting Date: {{ person.next_meeting_date }}</p>
-                    <a href="{{ url_for('edit', person_id=person.id) }}" class="edit-icon">Edit</a>
-                    <a href="{{ url_for('delete', person_id=person.id) }}" class="edit-icon">Delete</a>
+                    {% if person.image_url %}
+                    <img src="{{ person.image_url }}" alt="{{ person.full_name }}" class="person-image">
+                    {% endif %}
+                    {% if person.nickname %}<p><i class="fas fa-id-badge"></i> Nickname: {{ person.nickname }}</p>{% endif %}
+                    {% if person.gender %}<p><i class="fas fa-venus-mars"></i> Gender: {{ person.gender }}</p>{% endif %}
+                    {% if person.date_of_birth %}<p><i class="fas fa-calendar-alt"></i> Date of Birth: {{ person.date_of_birth }}</p>{% endif %}
+                    {% if person.place_of_birth %}<p><i class="fas fa-map-marker-alt"></i> Place of Birth: {{ person.place_of_birth }}</p>{% endif %}
+                    {% if person.nationality %}<p><i class="fas fa-flag"></i> Nationality: {{ person.nationality }}</p>{% endif %}
+                    {% if person.address %}<p><i class="fas fa-home"></i> Address: {{ person.address }}</p>{% endif %}
+                    {% if person.phone_number %}<p><i class="fas fa-phone"></i> Phone Number: {{ person.phone_number }}</p>{% endif %}
+                    {% if person.email_address %}<p><i class="fas fa-envelope"></i> Email Address: {{ person.email_address }}</p>{% endif %}
+                    {% if person.occupation %}<p><i class="fas fa-briefcase"></i> Occupation: {{ person.occupation }}</p>{% endif %}
+                    {% if person.company %}<p><i class="fas fa-building"></i> Company: {{ person.company }}</p>{% endif %}
+                    {% if person.job_title %}<p><i class="fas fa-id-card"></i> Job Title: {{ person.job_title }}</p>{% endif %}
+                    {% if person.work_address %}<p><i class="fas fa-map-marker-alt"></i> Work Address: {{ person.work_address }}</p>{% endif %}
+                    {% if person.work_phone_number %}<p><i class="fas fa-phone"></i> Work Phone Number: {{ person.work_phone_number }}</p>{% endif %}
+                    {% if person.work_email_address %}<p><i class="fas fa-envelope"></i> Work Email Address: {{ person.work_email_address }}</p>{% endif %}
+                    {% if person.linkedin_profile %}<p><i class="fab fa-linkedin"></i> LinkedIn Profile: <a href="{{ person.linkedin_profile }}" target="_blank">{{ person.linkedin_profile }}</a></p>{% endif %}
+                    {% if person.marital_status %}<p><i class="fas fa-heart"></i> Marital Status: {{ person.marital_status }}</p>{% endif %}
+                    {% if person.spouse_name %}<p><i class="fas fa-user-friends"></i> Spouse's Name: {{ person.spouse_name }}</p>{% endif %}
+                    {% if person.children_names_ages %}<p><i class="fas fa-child"></i> Children's Names and Ages: {{ person.children_names_ages }}</p>{% endif %}
+                    {% if person.hobbies %}<p><i class="fas fa-paint-brush"></i> Hobbies: {{ person.hobbies }}</p>{% endif %}
+                    {% if person.interests %}<p><i class="fas fa-star"></i> Interests: {{ person.interests }}</p>{% endif %}
+                    {% if person.favorite_books %}<p><i class="fas fa-book"></i> Favorite Books: {{ person.favorite_books }}</p>{% endif %}
+                    {% if person.favorite_movies %}<p><i class="fas fa-film"></i> Favorite Movies: {{ person.favorite_movies }}</p>{% endif %}
+                    {% if person.favorite_music %}<p><i class="fas fa-music"></i> Favorite Music: {{ person.favorite_music }}</p>{% endif %}
+                    {% if person.notes %}<p><i class="fas fa-sticky-note"></i> Notes: {{ person.notes }}</p>{% endif %}
+                    {% if person.social_media_profiles %}<p><i class="fas fa-globe"></i> Social Media Profiles: {{ person.social_media_profiles }}</p>{% endif %}
+                    {% if person.date_met %}<p><i class="fas fa-calendar-alt"></i> Date Met: {{ person.date_met }}</p>{% endif %}
+                    {% if person.place_met %}<p><i class="fas fa-map-marker-alt"></i> Place Met: {{ person.place_met }}</p>{% endif %}
+                    {% if person.first_impression %}<p><i class="fas fa-comment"></i> First Impression: {{ person.first_impression }}</p>{% endif %}
+                    {% if person.how_you_met %}<p><i class="fas fa-handshake"></i> How You Met: {{ person.how_you_met }}</p>{% endif %}
+                    {% if person.mutual_contacts %}<p><i class="fas fa-users"></i> Mutual Contacts: {{ person.mutual_contacts }}</p>{% endif %}
+                    {% if person.last_meeting_date %}<p><i class="fas fa-calendar-alt"></i> Last Meeting Date: {{ person.last_meeting_date }}</p>{% endif %}
+                    {% if person.next_meeting_date %}<p><i class="fas fa-calendar-alt"></i> Next Meeting Date: {{ person.next_meeting_date }}</p>{% endif %}
                 </div>
                 {% endfor %}
             </div>

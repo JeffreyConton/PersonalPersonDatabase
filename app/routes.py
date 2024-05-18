@@ -2,9 +2,11 @@ from flask import render_template, request, redirect, url_for
 from app import app, db
 from app.models import Person
 
+changelog = []
+
 @app.route('/')
 def home():
-    return redirect(url_for('browse'))
+    return render_template('home.html')
 
 @app.route('/browse')
 def browse():
@@ -47,10 +49,12 @@ def add():
             how_you_met=request.form.get('how_you_met', ''),
             mutual_contacts=request.form.get('mutual_contacts', ''),
             last_meeting_date=request.form.get('last_meeting_date', ''),
-            next_meeting_date=request.form.get('next_meeting_date', '')
+            next_meeting_date=request.form.get('next_meeting_date', ''),
+            image_url=request.form.get('image_url', '')  # Add this line
         )
         db.session.add(new_person)
         db.session.commit()
+        changelog.append(f"Added new person: {new_person.full_name}")
         return redirect(url_for('browse'))
     return render_template('edit.html', person=None)
 
@@ -91,13 +95,20 @@ def edit(person_id):
         person.mutual_contacts = request.form.get('mutual_contacts', '')
         person.last_meeting_date = request.form.get('last_meeting_date', '')
         person.next_meeting_date = request.form.get('next_meeting_date', '')
+        person.image_url = request.form.get('image_url', '')  # Add this line
         db.session.commit()
+        changelog.append(f"Edited person: {person.full_name}")
         return redirect(url_for('browse'))
     return render_template('edit.html', person=person)
 
 @app.route('/delete/<int:person_id>')
 def delete(person_id):
     person = Person.query.get_or_404(person_id)
+    changelog.append(f"Deleted person: {person.full_name}")
     db.session.delete(person)
     db.session.commit()
     return redirect(url_for('browse'))
+
+@app.route('/changelog')
+def changelog_view():
+    return render_template('changelog.html', changelog=changelog)

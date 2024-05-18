@@ -68,7 +68,7 @@ h2 {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
 }
 
@@ -93,16 +93,22 @@ h2 {
     margin: 5px 0;
 }
 
-.grid-item .edit-icon {
+.icon-container {
     position: absolute;
     top: 10px;
     right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.icon-container .edit-icon, .icon-container .delete-icon {
     cursor: pointer;
     color: #1e90ff;
     transition: color 0.3s;
 }
 
-.grid-item .edit-icon:hover {
+.icon-container .edit-icon:hover, .icon-container .delete-icon:hover {
     color: #005bb5;
 }
 
@@ -193,4 +199,11 @@ button:hover {
 
 .add-btn:hover {
     background-color: #005bb5;
+}
+
+.person-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
 }
