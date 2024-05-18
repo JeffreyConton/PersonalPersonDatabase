@@ -25,7 +25,7 @@ def edit(person_id):
         person.date_of_birth = request.form['date_of_birth']
         person.place_of_birth = request.form['place_of_birth']
         person.nationality = request.form['nationality']
-        person.address = request.form['address']
+        person.address = ';'.join(request.form.getlist('address'))
         person.phone_number = request.form['phone_number']
         person.email_address = request.form['email_address']
         person.social_media_profiles = request.form['social_media_profiles']
@@ -41,7 +41,7 @@ def edit(person_id):
         person.children_names_ages = request.form['children_names_ages']
         person.hobbies = request.form['hobbies']
         person.interests = request.form['interests']
-        person.favorite_books = request.form['favorite_books']
+        person.favorite_books = ';'.join(request.form.getlist('favorite_books'))
         person.favorite_movies = request.form['favorite_movies']
         person.favorite_music = request.form['favorite_music']
         person.notes = request.form['notes']
@@ -66,7 +66,7 @@ def add():
             date_of_birth=request.form['date_of_birth'],
             place_of_birth=request.form['place_of_birth'],
             nationality=request.form['nationality'],
-            address=request.form['address'],
+            address=';'.join(request.form.getlist('address')),
             phone_number=request.form['phone_number'],
             email_address=request.form['email_address'],
             social_media_profiles=request.form['social_media_profiles'],
@@ -82,7 +82,7 @@ def add():
             children_names_ages=request.form['children_names_ages'],
             hobbies=request.form['hobbies'],
             interests=request.form['interests'],
-            favorite_books=request.form['favorite_books'],
+            favorite_books=';'.join(request.form.getlist('favorite_books')),
             favorite_movies=request.form['favorite_movies'],
             favorite_music=request.form['favorite_music'],
             notes=request.form['notes'],

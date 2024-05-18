@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Person</title>
+    <title>{% if person %}Edit Person{% else %}Add Person{% endif %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
@@ -15,7 +15,7 @@
         </div>
         <div class="content">
             <div class="form-container">
-                <h2>Edit Person</h2>
+                <h2>{% if person %}Edit{% else %}Add{% endif %} Person</h2>
                 <form method="post">
                     <div class="dropdown-section">
                         <div class="dropdown-header" onclick="toggleDropdown(this)">
@@ -24,35 +24,44 @@
                         </div>
                         <div class="dropdown-content">
                             <label for="full_name">Full Name:</label>
-                            <input type="text" id="full_name" name="full_name" value="{{ person.full_name }}" required>
+                            <input type="text" id="full_name" name="full_name" value="{{ person.full_name if person else '' }}" required>
 
                             <label for="nickname">Nickname:</label>
-                            <input type="text" id="nickname" name="nickname" value="{{ person.nickname }}">
+                            <input type="text" id="nickname" name="nickname" value="{{ person.nickname if person else '' }}">
 
                             <label for="gender">Gender:</label>
                             <select id="gender" name="gender">
-                                <option value="Male" {% if person.gender == "Male" %}selected{% endif %}>Male</option>
-                                <option value="Female" {% if person.gender == "Female" %}selected{% endif %}>Female</option>
-                                <option value="Other" {% if person.gender == "Other" %}selected{% endif %}>Other</option>
+                                <option value="Male" {% if person and person.gender == "Male" %}selected{% endif %}>Male</option>
+                                <option value="Female" {% if person and person.gender == "Female" %}selected{% endif %}>Female</option>
+                                <option value="Other" {% if person and person.gender == "Other" %}selected{% endif %}>Other</option>
                             </select>
 
                             <label for="date_of_birth">Date of Birth:</label>
-                            <input type="date" id="date_of_birth" name="date_of_birth" value="{{ person.date_of_birth }}">
+                            <input type="date" id="date_of_birth" name="date_of_birth" value="{{ person.date_of_birth if person else '' }}">
 
                             <label for="place_of_birth">Place of Birth:</label>
-                            <input type="text" id="place_of_birth" name="place_of_birth" value="{{ person.place_of_birth }}">
+                            <input type="text" id="place_of_birth" name="place_of_birth" value="{{ person.place_of_birth if person else '' }}">
 
                             <label for="nationality">Nationality:</label>
-                            <input type="text" id="nationality" name="nationality" value="{{ person.nationality }}">
+                            <input type="text" id="nationality" name="nationality" value="{{ person.nationality if person else '' }}">
 
                             <label for="address">Address:</label>
-                            <input type="text" id="address" name="address" value="{{ person.address }}">
+                            <div id="address-container">
+                                {% if person and person.address %}
+                                    {% for address in person.address.split(';') %}
+                                        <input type="text" name="address" value="{{ address }}">
+                                    {% endfor %}
+                                {% else %}
+                                    <input type="text" name="address" value="">
+                                {% endif %}
+                            </div>
+                            <button type="button" class="add-btn" onclick="addField('address-container', 'address')">Add Address</button>
 
                             <label for="phone_number">Phone Number:</label>
-                            <input type="text" id="phone_number" name="phone_number" value="{{ person.phone_number }}">
+                            <input type="text" id="phone_number" name="phone_number" value="{{ person.phone_number if person else '' }}">
 
                             <label for="email_address">Email Address:</label>
-                            <input type="email" id="email_address" name="email_address" value="{{ person.email_address }}">
+                            <input type="email" id="email_address" name="email_address" value="{{ person.email_address if person else '' }}">
                         </div>
                     </div>
 
@@ -63,25 +72,25 @@
                         </div>
                         <div class="dropdown-content">
                             <label for="occupation">Occupation:</label>
-                            <input type="text" id="occupation" name="occupation" value="{{ person.occupation }}">
+                            <input type="text" id="occupation" name="occupation" value="{{ person.occupation if person else '' }}">
 
                             <label for="company">Company:</label>
-                            <input type="text" id="company" name="company" value="{{ person.company }}">
+                            <input type="text" id="company" name="company" value="{{ person.company if person else '' }}">
 
                             <label for="job_title">Job Title:</label>
-                            <input type="text" id="job_title" name="job_title" value="{{ person.job_title }}">
+                            <input type="text" id="job_title" name="job_title" value="{{ person.job_title if person else '' }}">
 
                             <label for="work_address">Work Address:</label>
-                            <input type="text" id="work_address" name="work_address" value="{{ person.work_address }}">
+                            <input type="text" id="work_address" name="work_address" value="{{ person.work_address if person else '' }}">
 
                             <label for="work_phone_number">Work Phone Number:</label>
-                            <input type="text" id="work_phone_number" name="work_phone_number" value="{{ person.work_phone_number }}">
+                            <input type="text" id="work_phone_number" name="work_phone_number" value="{{ person.work_phone_number if person else '' }}">
 
                             <label for="work_email_address">Work Email Address:</label>
-                            <input type="email" id="work_email_address" name="work_email_address" value="{{ person.work_email_address }}">
+                            <input type="email" id="work_email_address" name="work_email_address" value="{{ person.work_email_address if person else '' }}">
 
                             <label for="linkedin_profile">LinkedIn Profile:</label>
-                            <input type="text" id="linkedin_profile" name="linkedin_profile" value="{{ person.linkedin_profile }}">
+                            <input type="text" id="linkedin_profile" name="linkedin_profile" value="{{ person.linkedin_profile if person else '' }}">
                         </div>
                     </div>
 
@@ -93,35 +102,44 @@
                         <div class="dropdown-content">
                             <label for="marital_status">Marital Status:</label>
                             <select id="marital_status" name="marital_status">
-                                <option value="Single" {% if person.marital_status == "Single" %}selected{% endif %}>Single</option>
-                                <option value="Married" {% if person.marital_status == "Married" %}selected{% endif %}>Married</option>
-                                <option value="Divorced" {% if person.marital_status == "Divorced" %}selected{% endif %}>Divorced</option>
-                                <option value="Widowed" {% if person.marital_status == "Widowed" %}selected{% endif %}>Widowed</option>
+                                <option value="Single" {% if person and person.marital_status == "Single" %}selected{% endif %}>Single</option>
+                                <option value="Married" {% if person and person.marital_status == "Married" %}selected{% endif %}>Married</option>
+                                <option value="Divorced" {% if person and person.marital_status == "Divorced" %}selected{% endif %}>Divorced</option>
+                                <option value="Widowed" {% if person and person.marital_status == "Widowed" %}selected{% endif %}>Widowed</option>
                             </select>
 
                             <label for="spouse_name">Spouse's Name:</label>
-                            <input type="text" id="spouse_name" name="spouse_name" value="{{ person.spouse_name }}">
+                            <input type="text" id="spouse_name" name="spouse_name" value="{{ person.spouse_name if person else '' }}">
 
                             <label for="children_names_ages">Children's Names and Ages:</label>
-                            <textarea id="children_names_ages" name="children_names_ages">{{ person.children_names_ages }}</textarea>
+                            <textarea id="children_names_ages" name="children_names_ages">{{ person.children_names_ages if person else '' }}</textarea>
 
                             <label for="hobbies">Hobbies:</label>
-                            <textarea id="hobbies" name="hobbies">{{ person.hobbies }}</textarea>
+                            <textarea id="hobbies" name="hobbies">{{ person.hobbies if person else '' }}</textarea>
 
                             <label for="interests">Interests:</label>
-                            <textarea id="interests" name="interests">{{ person.interests }}</textarea>
+                            <textarea id="interests" name="interests">{{ person.interests if person else '' }}"></textarea>
 
                             <label for="favorite_books">Favorite Books:</label>
-                            <textarea id="favorite_books" name="favorite_books">{{ person.favorite_books }}</textarea>
+                            <div id="favorite-books-container">
+                                {% if person and person.favorite_books %}
+                                    {% for book in person.favorite_books.split(';') %}
+                                        <input type="text" name="favorite_books" value="{{ book }}">
+                                    {% endfor %}
+                                {% else %}
+                                    <input type="text" name="favorite_books" value="">
+                                {% endif %}
+                            </div>
+                            <button type="button" class="add-btn" onclick="addField('favorite-books-container', 'favorite_books')">Add Book</button>
 
                             <label for="favorite_movies">Favorite Movies:</label>
-                            <textarea id="favorite_movies" name="favorite_movies">{{ person.favorite_movies }}</textarea>
+                            <textarea id="favorite_movies" name="favorite_movies">{{ person.favorite_movies if person else '' }}</textarea>
 
                             <label for="favorite_music">Favorite Music:</label>
-                            <textarea id="favorite_music" name="favorite_music">{{ person.favorite_music }}</textarea>
+                            <textarea id="favorite_music" name="favorite_music">{{ person.favorite_music if person else '' }}"></textarea>
 
                             <label for="notes">Notes:</label>
-                            <textarea id="notes" name="notes">{{ person.notes }}</textarea>
+                            <textarea id="notes" name="notes">{{ person.notes if person else '' }}"></textarea>
                         </div>
                     </div>
 
@@ -132,29 +150,29 @@
                         </div>
                         <div class="dropdown-content">
                             <label for="date_met">Date Met:</label>
-                            <input type="date" id="date_met" name="date_met" value="{{ person.date_met }}">
+                            <input type="date" id="date_met" name="date_met" value="{{ person.date_met if person else '' }}">
 
                             <label for="place_met">Place Met:</label>
-                            <input type="text" id="place_met" name="place_met" value="{{ person.place_met }}">
+                            <input type="text" id="place_met" name="place_met" value="{{ person.place_met if person else '' }}">
 
                             <label for="first_impression">First Impression:</label>
-                            <textarea id="first_impression" name="first_impression">{{ person.first_impression }}</textarea>
+                            <textarea id="first_impression" name="first_impression">{{ person.first_impression if person else '' }}"></textarea>
 
                             <label for="how_you_met">How You Met:</label>
-                            <textarea id="how_you_met" name="how_you_met">{{ person.how_you_met }}</textarea>
+                            <textarea id="how_you_met" name="how_you_met">{{ person.how_you_met if person else '' }}"></textarea>
 
                             <label for="mutual_contacts">Mutual Contacts:</label>
-                            <textarea id="mutual_contacts" name="mutual_contacts">{{ person.mutual_contacts }}"></textarea>
+                            <textarea id="mutual_contacts" name="mutual_contacts">{{ person.mutual_contacts if person else '' }}"></textarea>
 
                             <label for="last_meeting_date">Last Meeting Date:</label>
-                            <input type="date" id="last_meeting_date" name="last_meeting_date" value="{{ person.last_meeting_date }}">
+                            <input type="date" id="last_meeting_date" name="last_meeting_date" value="{{ person.last_meeting_date if person else '' }}">
 
                             <label for="next_meeting_date">Next Meeting Date:</label>
-                            <input type="date" id="next_meeting_date" name="next_meeting_date" value="{{ person.next_meeting_date }}">
+                            <input type="date" id="next_meeting_date" name="next_meeting_date" value="{{ person.next_meeting_date if person else '' }}">
                         </div>
                     </div>
 
-                    <button type="submit">Update</button>
+                    <button type="submit">{% if person %}Update{% else %}Add{% endif %}</button>
                 </form>
             </div>
         </div>
@@ -171,6 +189,14 @@
                 content.classList.add('show');
                 icon.textContent = '-';
             }
+        }
+
+        function addField(containerId, fieldName) {
+            const container = document.getElementById(containerId);
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = fieldName;
+            container.appendChild(input);
         }
     </script>
 </body>

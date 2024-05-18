@@ -15,7 +15,7 @@
             </ul>
         </div>
         <div class="content">
-            <div class="info-list">
+            <div class="info-list" style="width: 100%;">
                 <h2>People</h2>
                 <form method="get" action="{{ url_for('browse') }}">
                     <input type="text" name="search" placeholder="Search people..." value="{{ request.args.get('search', '') }}">
