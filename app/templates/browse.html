@@ -18,9 +18,21 @@
         </div>
         <div class="content">
             <h2>Browse People</h2>
-            <div class="person-grid">
+            <div class="search-container">
+                <input type="text" class="search-bar" id="searchBar" placeholder="Search by name, nickname, etc.">
+                <div class="filter-options">
+                    <label for="genderFilter">Gender:</label>
+                    <select id="genderFilter">
+                        <option value="">All</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="person-grid" id="personGrid">
                 {% for person in people %}
-                    <div class="person-card">
+                    <div class="person-card" data-name="{{ person.full_name }}" data-gender="{{ person.gender }}">
                         {% if person.image_url %}
                             <img src="{{ person.image_url }}" alt="{{ person.full_name }}" class="person-image">
                         {% endif %}
@@ -42,5 +54,30 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('searchBar').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            document.querySelectorAll('.person-card').forEach(card => {
+                const name = card.getAttribute('data-name').toLowerCase();
+                if (name.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        document.getElementById('genderFilter').addEventListener('change', function() {
+            const filter = this.value;
+            document.querySelectorAll('.person-card').forEach(card => {
+                const gender = card.getAttribute('data-gender');
+                if (filter === "" || gender === filter) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -179,3 +179,32 @@ button:hover {
     border-radius: 4px;
     margin-bottom: 10px;
 }
+
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+.filter-options {
+    display: flex;
+    align-items: center;
+}
+
+.filter-options select {
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #333;
+    color: #e0e0e0;
+}
