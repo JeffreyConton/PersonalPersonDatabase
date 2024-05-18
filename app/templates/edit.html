@@ -12,7 +12,8 @@
         <div class="navigation">
             <h2>Navigation</h2>
             <ul>
-                <li><a href="{{ url_for('browse') }}">Back</a></li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('browse') }}">Browse People</a></li>
             </ul>
         </div>
         <div class="content">
@@ -208,7 +209,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="notes"><i class="fas fa-sticky-note"></i> Notes:</label>
-                                <textarea id="notes" name="notes">{{ person.notes if person else '' }}"></textarea>
+                                <textarea id="notes" name="notes">{{ person.notes if person else '' }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -238,7 +239,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="first_impression"><i class="fas fa-comment"></i> First Impression:</label>
-                                <textarea id="first_impression" name="first_impression">{{ person.first_impression if person else '' }}"></textarea>
+                                <textarea id="first_impression" name="first_impression">{{ person.first_impression if person else '' }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="how_you_met"><i class="fas fa-handshake"></i> How You Met:</label>
