@@ -144,28 +144,33 @@ button:hover {
     background-color: #005bb5;
 }
 
-.input-group {
+.person-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.person-card {
+    background-color: #2e2e2e;
+    padding: 20px;
+    border-radius: 8px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    position: relative;
+    text-align: center;
 }
 
-.input-group input {
-    flex: 1;
-    padding-right: 40px; /* Add space for the icon */
+.person-card h3 {
+    margin-bottom: 10px;
+    color: #e0e0e0;
 }
 
-.input-group button {
-    position: absolute;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #1e90ff;
+.person-card p {
+    margin-bottom: 10px;
 }
 
-.input-group button:hover {
-    color: #005bb5;
+.person-card a {
+    margin: 5px 0;
 }
 
 .person-image {

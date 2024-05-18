@@ -18,23 +18,28 @@
         </div>
         <div class="content">
             <h2>Browse People</h2>
-            {% for person in people %}
-                <div class="person-card">
-                    <h3>{{ person.full_name }}</h3>
-                    <p><i class="fas fa-id-badge"></i> Nickname: {{ person.nickname }}</p>
-                    <p><i class="fas fa-venus-mars"></i> Gender: {{ person.gender }}</p>
-                    <p><i class="fas fa-calendar-alt"></i> Date of Birth: {{ person.date_of_birth }}</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Place of Birth: {{ person.place_of_birth }}</p>
-                    <p><i class="fas fa-flag"></i> Nationality: {{ person.nationality }}</p>
-                    <p><i class="fas fa-home"></i> Address: {{ person.address }}</p>
-                    <p><i class="fas fa-phone"></i> Phone Number: {{ person.phone_number }}</p>
-                    <p><i class="fas fa-envelope"></i> Email Address: {{ person.email_address }}</p>
-                    <a href="{{ url_for('add_or_edit', id=person.id) }}">Edit</a>
-                    <form action="{{ url_for('delete', id=person.id) }}" method="post" style="display:inline;">
-                        <button type="submit">Delete</button>
-                    </form>
-                </div>
-            {% endfor %}
+            <div class="person-grid">
+                {% for person in people %}
+                    <div class="person-card">
+                        {% if person.image_url %}
+                            <img src="{{ person.image_url }}" alt="{{ person.full_name }}" class="person-image">
+                        {% endif %}
+                        <h3>{{ person.full_name }}</h3>
+                        <p><i class="fas fa-id-badge"></i> Nickname: {{ person.nickname }}</p>
+                        <p><i class="fas fa-venus-mars"></i> Gender: {{ person.gender }}</p>
+                        <p><i class="fas fa-calendar-alt"></i> Date of Birth: {{ person.date_of_birth }}</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Place of Birth: {{ person.place_of_birth }}</p>
+                        <p><i class="fas fa-flag"></i> Nationality: {{ person.nationality }}</p>
+                        <p><i class="fas fa-home"></i> Address: {{ person.address }}</p>
+                        <p><i class="fas fa-phone"></i> Phone Number: {{ person.phone_number }}</p>
+                        <p><i class="fas fa-envelope"></i> Email Address: {{ person.email_address }}</p>
+                        <a href="{{ url_for('add_or_edit', id=person.id) }}">Edit</a>
+                        <form action="{{ url_for('delete', id=person.id) }}" method="post" style="display:inline;">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </body>
