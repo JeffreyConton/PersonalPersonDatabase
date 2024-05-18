@@ -31,8 +31,6 @@
                                 <label for="nickname"><i class="fas fa-id-badge"></i> Nickname:</label>
                                 <input type="text" id="nickname" name="nickname" value="{{ person.nickname if person else '' }}">
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="gender"><i class="fas fa-venus-mars"></i> Gender:</label>
                                 <select id="gender" name="gender">
@@ -45,8 +43,6 @@
                                 <label for="date_of_birth"><i class="fas fa-calendar-alt"></i> Date of Birth:</label>
                                 <input type="date" id="date_of_birth" name="date_of_birth" value="{{ person.date_of_birth if person else '' }}">
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="place_of_birth"><i class="fas fa-map-marker-alt"></i> Place of Birth:</label>
                                 <input type="text" id="place_of_birth" name="place_of_birth" value="{{ person.place_of_birth if person else '' }}">
@@ -55,27 +51,14 @@
                                 <label for="nationality"><i class="fas fa-flag"></i> Nationality:</label>
                                 <input type="text" id="nationality" name="nationality" value="{{ person.nationality if person else '' }}">
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="address"><i class="fas fa-home"></i> Address:</label>
-                                <div id="address-container">
-                                    {% if person and person.address %}
-                                        {% for address in person.address.split(';') %}
-                                            <input type="text" name="address" value="{{ address }}">
-                                        {% endfor %}
-                                    {% else %}
-                                        <input type="text" name="address" value="">
-                                    {% endif %}
-                                </div>
-                                <button type="button" class="add-btn" onclick="addField('address-container', 'address')">Add Address</button>
+                                <input type="text" id="address" name="address" value="{{ person.address if person else '' }}">
                             </div>
                             <div class="form-group">
                                 <label for="phone_number"><i class="fas fa-phone"></i> Phone Number:</label>
                                 <input type="text" id="phone_number" name="phone_number" value="{{ person.phone_number if person else '' }}">
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="email_address"><i class="fas fa-envelope"></i> Email Address:</label>
                                 <input type="email" id="email_address" name="email_address" value="{{ person.email_address if person else '' }}">
@@ -98,8 +81,6 @@
                                 <label for="company"><i class="fas fa-building"></i> Company:</label>
                                 <input type="text" id="company" name="company" value="{{ person.company if person else '' }}">
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="job_title"><i class="fas fa-id-card"></i> Job Title:</label>
                                 <input type="text" id="job_title" name="job_title" value="{{ person.job_title if person else '' }}">
@@ -108,8 +89,6 @@
                                 <label for="work_address"><i class="fas fa-map-marker-alt"></i> Work Address:</label>
                                 <input type="text" id="work_address" name="work_address" value="{{ person.work_address if person else '' }}">
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="work_phone_number"><i class="fas fa-phone"></i> Work Phone Number:</label>
                                 <input type="text" id="work_phone_number" name="work_phone_number" value="{{ person.work_phone_number if person else '' }}">
@@ -118,8 +97,6 @@
                                 <label for="work_email_address"><i class="fas fa-envelope"></i> Work Email Address:</label>
                                 <input type="email" id="work_email_address" name="work_email_address" value="{{ person.work_email_address if person else '' }}">
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="linkedin_profile"><i class="fab fa-linkedin"></i> LinkedIn Profile:</label>
                                 <input type="text" id="linkedin_profile" name="linkedin_profile" value="{{ person.linkedin_profile if person else '' }}">
@@ -143,20 +120,9 @@
                                 <label for="spouse_name"><i class="fas fa-user-friends"></i> Spouse's Name:</label>
                                 <input type="text" id="spouse_name" name="spouse_name" value="{{ person.spouse_name if person else '' }}">
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="children_names_ages"><i class="fas fa-child"></i> Children's Names and Ages:</label>
-                                <div id="children_names_ages-container">
-                                    {% if person and person.children_names_ages %}
-                                        {% for child in person.children_names_ages.split(';') %}
-                                            <input type="text" name="children_names_ages" value="{{ child }}">
-                                        {% endfor %}
-                                    {% else %}
-                                        <input type="text" name="children_names_ages" value="">
-                                    {% endif %}
-                                </div>
-                                <button type="button" class="add-btn" onclick="addField('children_names_ages-container', 'children_names_ages')">Add Child</button>
+                                <input type="text" id="children_names_ages" name="children_names_ages" value="{{ person.children_names_ages if person else '' }}">
                             </div>
                         </div>
                     </div>
@@ -166,7 +132,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="hobbies"><i class="fas fa-paint-brush"></i> Hobbies:</label>
-                                <textarea id="hobbies" name="hobbies">{{ person.hobbies if person else '' }}</textarea>
+                                <textarea id="hobbies" name="hobbies">{{ person.hobbies if person else '' }}"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="interests"><i class="fas fa-star"></i> Interests:</label>
@@ -180,23 +146,12 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="favorite_books"><i class="fas fa-book"></i> Favorite Books:</label>
-                                <div id="favorite_books-container">
-                                    {% if person and person.favorite_books %}
-                                        {% for book in person.favorite_books.split(';') %}
-                                            <input type="text" name="favorite_books" value="{{ book }}">
-                                        {% endfor %}
-                                    {% else %}
-                                        <input type="text" name="favorite_books" value="">
-                                    {% endif %}
-                                </div>
-                                <button type="button" class="add-btn" onclick="addField('favorite_books-container', 'favorite_books')">Add Book</button>
+                                <input type="text" id="favorite_books" name="favorite_books" value="{{ person.favorite_books if person else '' }}">
                             </div>
                             <div class="form-group">
                                 <label for="favorite_movies"><i class="fas fa-film"></i> Favorite Movies:</label>
                                 <input type="text" id="favorite_movies" name="favorite_movies" value="{{ person.favorite_movies if person else '' }}">
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="favorite_music"><i class="fas fa-music"></i> Favorite Music:</label>
                                 <input type="text" id="favorite_music" name="favorite_music" value="{{ person.favorite_music if person else '' }}">
@@ -209,7 +164,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="notes"><i class="fas fa-sticky-note"></i> Notes:</label>
-                                <textarea id="notes" name="notes">{{ person.notes if person else '' }}</textarea>
+                                <textarea id="notes" name="notes">{{ person.notes if person else '' }}"></textarea>
                             </div>
                         </div>
                     </div>
@@ -219,7 +174,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="social_media_profiles"><i class="fas fa-globe"></i> Social Media Profiles:</label>
-                                <textarea id="social_media_profiles" name="social_media_profiles">{{ person.social_media_profiles if person else '' }}</textarea>
+                                <textarea id="social_media_profiles" name="social_media_profiles">{{ person.social_media_profiles if person else '' }}"></textarea>
                             </div>
                         </div>
                     </div>
@@ -235,33 +190,18 @@
                                 <label for="place_met"><i class="fas fa-map-marker-alt"></i> Place Met:</label>
                                 <input type="text" id="place_met" name="place_met" value="{{ person.place_met if person else '' }}">
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="first_impression"><i class="fas fa-comment"></i> First Impression:</label>
-                                <textarea id="first_impression" name="first_impression">{{ person.first_impression if person else '' }}</textarea>
+                                <textarea id="first_impression" name="first_impression">{{ person.first_impression if person else '' }}"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="how_you_met"><i class="fas fa-handshake"></i> How You Met:</label>
                                 <textarea id="how_you_met" name="how_you_met">{{ person.how_you_met if person else '' }}"></textarea>
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="mutual_contacts"><i class="fas fa-users"></i> Mutual Contacts:</label>
-                                <div id="mutual_contacts-container">
-                                    {% if person and person.mutual_contacts %}
-                                        {% for contact in person.mutual_contacts.split(';') %}
-                                            <input type="text" name="mutual_contacts" value="{{ contact }}">
-                                        {% endfor %}
-                                    {% else %}
-                                        <input type="text" name="mutual_contacts" value="">
-                                    {% endif %}
-                                </div>
-                                <button type="button" class="add-btn" onclick="addField('mutual_contacts-container', 'mutual_contacts')">Add Contact</button>
+                                <input type="text" id="mutual_contacts" name="mutual_contacts" value="{{ person.mutual_contacts if person else '' }}">
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="last_meeting_date"><i class="fas fa-calendar-alt"></i> Last Meeting Date:</label>
                                 <input type="date" id="last_meeting_date" name="last_meeting_date" value="{{ person.last_meeting_date if person else '' }}">
@@ -280,14 +220,6 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
     <script>
-        function addField(containerId, fieldName) {
-            const container = document.getElementById(containerId);
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.name = fieldName;
-            container.appendChild(input);
-        }
-
         document.querySelectorAll('input[type="text"], textarea').forEach(field => {
             new Awesomplete(field, {
                 list: [{% for person in people %}'{{ person.full_name }}', {% endfor %}],
