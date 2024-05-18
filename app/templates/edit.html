@@ -5,6 +5,7 @@
     <title>{% if person %}Edit Person{% else %}Add Person{% endif %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.css">
 </head>
 <body>
     <div class="container">
@@ -145,7 +146,16 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="children_names_ages"><i class="fas fa-child"></i> Children's Names and Ages:</label>
-                                <textarea id="children_names_ages" name="children_names_ages">{{ person.children_names_ages if person else '' }}</textarea>
+                                <div id="children_names_ages-container">
+                                    {% if person and person.children_names_ages %}
+                                        {% for child in person.children_names_ages.split(';') %}
+                                            <input type="text" name="children_names_ages" value="{{ child }}">
+                                        {% endfor %}
+                                    {% else %}
+                                        <input type="text" name="children_names_ages" value="">
+                                    {% endif %}
+                                </div>
+                                <button type="button" class="add-btn" onclick="addField('children_names_ages-container', 'children_names_ages')">Add Child</button>
                             </div>
                         </div>
                     </div>
@@ -159,7 +169,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="interests"><i class="fas fa-star"></i> Interests:</label>
-                                <textarea id="interests" name="interests">{{ person.interests if person else '' }}</textarea>
+                                <textarea id="interests" name="interests">{{ person.interests if person else '' }}"></textarea>
                             </div>
                         </div>
                     </div>
@@ -198,7 +208,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="notes"><i class="fas fa-sticky-note"></i> Notes:</label>
-                                <textarea id="notes" name="notes">{{ person.notes if person else '' }}</textarea>
+                                <textarea id="notes" name="notes">{{ person.notes if person else '' }}"></textarea>
                             </div>
                         </div>
                     </div>
@@ -228,17 +238,26 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="first_impression"><i class="fas fa-comment"></i> First Impression:</label>
-                                <textarea id="first_impression" name="first_impression">{{ person.first_impression if person else '' }}</textarea>
+                                <textarea id="first_impression" name="first_impression">{{ person.first_impression if person else '' }}"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="how_you_met"><i class="fas fa-handshake"></i> How You Met:</label>
-                                <textarea id="how_you_met" name="how_you_met">{{ person.how_you_met if person else '' }}</textarea>
+                                <textarea id="how_you_met" name="how_you_met">{{ person.how_you_met if person else '' }}"></textarea>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="mutual_contacts"><i class="fas fa-users"></i> Mutual Contacts:</label>
-                                <textarea id="mutual_contacts" name="mutual_contacts">{{ person.mutual_contacts if person else '' }}</textarea>
+                                <div id="mutual_contacts-container">
+                                    {% if person and person.mutual_contacts %}
+                                        {% for contact in person.mutual_contacts.split(';') %}
+                                            <input type="text" name="mutual_contacts" value="{{ contact }}">
+                                        {% endfor %}
+                                    {% else %}
+                                        <input type="text" name="mutual_contacts" value="">
+                                    {% endif %}
+                                </div>
+                                <button type="button" class="add-btn" onclick="addField('mutual_contacts-container', 'mutual_contacts')">Add Contact</button>
                             </div>
                         </div>
                         <div class="form-row">
@@ -258,6 +277,7 @@
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
     <script>
         function addField(containerId, fieldName) {
             const container = document.getElementById(containerId);
@@ -266,6 +286,19 @@
             input.name = fieldName;
             container.appendChild(input);
         }
+
+        document.querySelectorAll('input[type="text"], textarea').forEach(field => {
+            new Awesomplete(field, {
+                list: [{% for person in people %}'{{ person.full_name }}', {% endfor %}],
+                filter: Awesomplete.FILTER_STARTSWITH,
+                replace: function(text) {
+                    const start = this.input.selectionStart;
+                    const end = this.input.selectionEnd;
+                    this.input.value = this.input.value.slice(0, start) + '@' + text + this.input.value.slice(end);
+                    this.input.setSelectionRange(start + text.length + 1, start + text.length + 1);
+                }
+            });
+        });
     </script>
 </body>
 </html>

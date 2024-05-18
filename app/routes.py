@@ -23,7 +23,7 @@ def add():
             date_of_birth=request.form.get('date_of_birth', ''),
             place_of_birth=request.form.get('place_of_birth', ''),
             nationality=request.form.get('nationality', ''),
-            address=request.form.get('address', ''),
+            address=';'.join(request.form.getlist('address')),
             phone_number=request.form.get('phone_number', ''),
             email_address=request.form.get('email_address', ''),
             occupation=request.form.get('occupation', ''),
@@ -35,7 +35,7 @@ def add():
             linkedin_profile=request.form.get('linkedin_profile', ''),
             marital_status=request.form.get('marital_status', ''),
             spouse_name=request.form.get('spouse_name', ''),
-            children_names_ages=request.form.get('children_names_ages', ''),
+            children_names_ages=';'.join(request.form.getlist('children_names_ages')),
             hobbies=request.form.get('hobbies', ''),
             interests=request.form.get('interests', ''),
             favorite_books=';'.join(request.form.getlist('favorite_books')),
@@ -47,16 +47,17 @@ def add():
             place_met=request.form.get('place_met', ''),
             first_impression=request.form.get('first_impression', ''),
             how_you_met=request.form.get('how_you_met', ''),
-            mutual_contacts=request.form.get('mutual_contacts', ''),
+            mutual_contacts=';'.join(request.form.getlist('mutual_contacts')),
             last_meeting_date=request.form.get('last_meeting_date', ''),
             next_meeting_date=request.form.get('next_meeting_date', ''),
-            image_url=request.form.get('image_url', '')  # Add this line
+            image_url=request.form.get('image_url', '')
         )
         db.session.add(new_person)
         db.session.commit()
         changelog.append(f"Added new person: {new_person.full_name}")
         return redirect(url_for('browse'))
-    return render_template('edit.html', person=None)
+    people = Person.query.all()
+    return render_template('edit.html', person=None, people=people)
 
 @app.route('/edit/<int:person_id>', methods=['GET', 'POST'])
 def edit(person_id):
@@ -68,7 +69,7 @@ def edit(person_id):
         person.date_of_birth = request.form.get('date_of_birth', '')
         person.place_of_birth = request.form.get('place_of_birth', '')
         person.nationality = request.form.get('nationality', '')
-        person.address = request.form.get('address', '')
+        person.address = ';'.join(request.form.getlist('address'))
         person.phone_number = request.form.get('phone_number', '')
         person.email_address = request.form.get('email_address', '')
         person.occupation = request.form.get('occupation', '')
@@ -80,7 +81,7 @@ def edit(person_id):
         person.linkedin_profile = request.form.get('linkedin_profile', '')
         person.marital_status = request.form.get('marital_status', '')
         person.spouse_name = request.form.get('spouse_name', '')
-        person.children_names_ages = request.form.get('children_names_ages', '')
+        person.children_names_ages = ';'.join(request.form.getlist('children_names_ages'))
         person.hobbies = request.form.get('hobbies', '')
         person.interests = request.form.get('interests', '')
         person.favorite_books = ';'.join(request.form.getlist('favorite_books'))
@@ -92,14 +93,15 @@ def edit(person_id):
         person.place_met = request.form.get('place_met', '')
         person.first_impression = request.form.get('first_impression', '')
         person.how_you_met = request.form.get('how_you_met', '')
-        person.mutual_contacts = request.form.get('mutual_contacts', '')
+        person.mutual_contacts = ';'.join(request.form.getlist('mutual_contacts'))
         person.last_meeting_date = request.form.get('last_meeting_date', '')
         person.next_meeting_date = request.form.get('next_meeting_date', '')
-        person.image_url = request.form.get('image_url', '')  # Add this line
+        person.image_url = request.form.get('image_url', '')
         db.session.commit()
         changelog.append(f"Edited person: {person.full_name}")
         return redirect(url_for('browse'))
-    return render_template('edit.html', person=person)
+    people = Person.query.all()
+    return render_template('edit.html', person=person, people=people)
 
 @app.route('/delete/<int:person_id>')
 def delete(person_id):
