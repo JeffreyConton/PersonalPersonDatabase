@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile - {{ person.full_name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card text-white">
+        <div class="card-body">
+            <h2 class="card-title">{{ person.full_name }}</h2>
+            <p class="card-text">
+                <strong>Nickname:</strong> {{ person.nickname }}<br>
+                <strong>Gender:</strong> {{ person.gender }}<br>
+                <strong>Date of Birth:</strong> {{ person.date_of_birth }}<br>
+                <strong>Place of Birth:</strong> {{ person.place_of_birth }}<br>
+                <strong>Nationality:</strong> {{ person.nationality }}<br>
+                <strong>Address:</strong> {{ person.address }}<br>
+                <strong>Phone Number:</strong> {{ person.phone_number }}<br>
+                <strong>Email Address:</strong> {{ person.email_address }}<br>
+                <strong>Occupation:</strong> {{ person.occupation }}<br>
+                <strong>Company:</strong> {{ person.company }}<br>
+                <strong>Job Title:</strong> {{ person.job_title }}<br>
+                <strong>Work Address:</strong> {{ person.work_address }}<br>
+                <strong>Work Phone Number:</strong> {{ person.work_phone_number }}<br>
+                <strong>Work Email Address:</strong> {{ person.work_email_address }}<br>
+                <strong>LinkedIn Profile:</strong> <a href="{{ person.linkedin_profile }}" class="text-info" target="_blank">{{ person.linkedin_profile }}</a><br>
+                <strong>Marital Status:</strong> {{ person.marital_status }}<br>
+                <strong>Spouse Name:</strong> {{ person.spouse_name }}<br>
+                <strong>Children Names & Ages:</strong> {{ person.children_names_ages }}<br>
+                <strong>Hobbies:</strong> {{ person.hobbies }}<br>
+                <strong>Interests:</strong> {{ person.interests }}<br>
+                <strong>Favorite Books:</strong> {{ person.favorite_books }}<br>
+                <strong>Favorite Movies:</strong> {{ person.favorite_movies }}<br>
+                <strong>Favorite Music:</strong> {{ person.favorite_music }}<br>
+                <strong>Notes:</strong> {{ person.notes }}<br>
+                <strong>Social Media Profiles:</strong> {{ person.social_media_profiles }}<br>
+                <strong>Date Met:</strong> {{ person.date_met }}<br>
+                <strong>Place Met:</strong> {{ person.place_met }}<br>
+                <strong>First Impression:</strong> {{ person.first_impression }}<br>
+                <strong>How You Met:</strong> {{ person.how_you_met }}<br>
+                <strong>Mutual Contacts:</strong> {{ person.mutual_contacts }}<br>
+                <strong>Last Meeting Date:</strong> {{ person.last_meeting_date }}<br>
+                <strong>Next Meeting Date:</strong> {{ person.next_meeting_date }}<br>
+            </p>
+            <a href="{{ url_for('browse') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Browse</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

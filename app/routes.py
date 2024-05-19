@@ -49,6 +49,7 @@ def home():
 
 from flask import jsonify
 
+
 @app.route('/browse')
 @login_required
 def browse():
@@ -72,6 +73,13 @@ def browse():
         return jsonify(response)
 
     return render_template('browse.html', people=people)
+
+
+@app.route('/profile/<int:id>')
+@login_required
+def profile(id):
+    person = Person.query.get_or_404(id)
+    return render_template('profile.html', person=person)
 
 
 @app.route('/add', methods=['GET', 'POST'])

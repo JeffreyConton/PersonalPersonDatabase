@@ -7,9 +7,9 @@
 <div id="people-container" class="row">
     {% for person in people.items %}
     <div class="col-md-4 mb-4">
-        <div class="card bg-secondary text-white h-100">
+        <div class="card text-white h-100">
             <div class="card-body d-flex flex-column">
-                <h5 class="card-title">{{ person.full_name }}</h5>
+                <h5 class="card-title"><a href="{{ url_for('profile', id=person.id) }}" class="text-white">{{ person.full_name }}</a></h5>
                 <p class="card-text">
                     {{ person.email_address }}<br>
                     {{ person.phone_number }}
