@@ -22,7 +22,7 @@ This project is a web-based personal person database application that allows you
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/your-username/personal-person-database.git
+    git clone https://github.com/your-username/PersonalPersonDatabase.git
     cd personal-person-database
     ```
 

@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from app import app, db
 from app.models import Person, User
@@ -47,11 +47,30 @@ def home():
     return render_template('home.html')
 
 
+from flask import jsonify
+
 @app.route('/browse')
 @login_required
 def browse():
     page = request.args.get('page', 1, type=int)
-    people = Person.query.paginate(page=page, per_page=10)
+    per_page = 15 if page == 1 else 10  # Load 15 items on the initial load, 10 on subsequent requests
+
+    people = Person.query.paginate(page=page, per_page=per_page)
+
+    if request.args.get('ajax'):
+        response = {
+            'people': [
+                {
+                    'id': person.id,
+                    'full_name': person.full_name,
+                    'email_address': person.email_address,
+                    'phone_number': person.phone_number,
+                } for person in people.items
+            ]
+        }
+        print(f"Page: {page}, People: {response['people']}")  # Debug statement to check the data being returned
+        return jsonify(response)
+
     return render_template('browse.html', people=people)
 
 
