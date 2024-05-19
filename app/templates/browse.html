@@ -28,17 +28,20 @@
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
                     </select>
+                    <label for="occupationFilter">Occupation:</label>
+                    <input type="text" id="occupationFilter" placeholder="Occupation">
                 </div>
             </div>
             <div class="person-grid" id="personGrid">
-                {% for person in people %}
-                    <div class="person-card" data-name="{{ person.full_name }}" data-gender="{{ person.gender }}">
+                {% for person in people.items %}
+                    <div class="person-card" data-name="{{ person.full_name }}" data-gender="{{ person.gender }}" data-occupation="{{ person.occupation }}">
                         {% if person.image_url %}
                             <img src="{{ person.image_url }}" alt="{{ person.full_name }}" class="person-image">
                         {% endif %}
                         <h3>{{ person.full_name }}</h3>
                         <p><i class="fas fa-id-badge"></i> Nickname: {{ person.nickname }}</p>
                         <p><i class="fas fa-venus-mars"></i> Gender: {{ person.gender }}</p>
+                        <p><i class="fas fa-briefcase"></i> Occupation: {{ person.occupation }}</p>
                         <p><i class="fas fa-calendar-alt"></i> Date of Birth: {{ person.date_of_birth }}</p>
                         <p><i class="fas fa-map-marker-alt"></i> Place of Birth: {{ person.place_of_birth }}</p>
                         <p><i class="fas fa-flag"></i> Nationality: {{ person.nationality }}</p>
@@ -52,32 +55,46 @@
                     </div>
                 {% endfor %}
             </div>
+            <div class="pagination">
+                {% if people.has_prev %}
+                    <a href="{{ url_for('browse', page=people.prev_num) }}">&laquo; Prev</a>
+                {% endif %}
+                {% if people.has_next %}
+                    <a href="{{ url_for('browse', page=people.next_num) }}">Next &raquo;</a>
+                {% endif %}
+            </div>
         </div>
     </div>
     <script>
-        document.getElementById('searchBar').addEventListener('input', function() {
-            const query = this.value.toLowerCase();
+        const searchBar = document.getElementById('searchBar');
+        const genderFilter = document.getElementById('genderFilter');
+        const occupationFilter = document.getElementById('occupationFilter');
+
+        function filterCards() {
+            const searchQuery = searchBar.value.toLowerCase();
+            const genderQuery = genderFilter.value;
+            const occupationQuery = occupationFilter.value.toLowerCase();
+
             document.querySelectorAll('.person-card').forEach(card => {
                 const name = card.getAttribute('data-name').toLowerCase();
-                if (name.includes(query)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-
-        document.getElementById('genderFilter').addEventListener('change', function() {
-            const filter = this.value;
-            document.querySelectorAll('.person-card').forEach(card => {
                 const gender = card.getAttribute('data-gender');
-                if (filter === "" || gender === filter) {
+                const occupation = card.getAttribute('data-occupation').toLowerCase();
+
+                const matchesSearch = name.includes(searchQuery);
+                const matchesGender = !genderQuery || gender === genderQuery;
+                const matchesOccupation = !occupationQuery || occupation.includes(occupationQuery);
+
+                if (matchesSearch && matchesGender && matchesOccupation) {
                     card.style.display = 'block';
                 } else {
                     card.style.display = 'none';
                 }
             });
-        });
+        }
+
+        searchBar.addEventListener('input', filterCards);
+        genderFilter.addEventListener('change', filterCards);
+        occupationFilter.addEventListener('input', filterCards);
     </script>
 </body>
 </html>

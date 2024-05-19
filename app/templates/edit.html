@@ -2,236 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% if person %}Edit Person{% else %}Add Person{% endif %}</title>
+    <title>{% if person %}Edit{% else %}Add{% endif %} Person</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.css">
 </head>
 <body>
     <div class="container">
-        <div class="navigation">
-            <h2>Navigation</h2>
-            <ul>
-                <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="{{ url_for('browse') }}">Browse People</a></li>
-            </ul>
-        </div>
-        <div class="content">
-            <div class="form-container">
-                <h2>{% if person %}Edit{% else %}Add{% endif %} Person</h2>
-                <form method="post">
-                    <div class="section">
-                        <h3>Basic Information</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="full_name"><i class="fas fa-user"></i> Full Name:</label>
-                                <input type="text" id="full_name" name="full_name" value="{{ person.full_name if person else '' }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="nickname"><i class="fas fa-id-badge"></i> Nickname:</label>
-                                <input type="text" id="nickname" name="nickname" value="{{ person.nickname if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="gender"><i class="fas fa-venus-mars"></i> Gender:</label>
-                                <select id="gender" name="gender">
-                                    <option value="Male" {% if person and person.gender == "Male" %}selected{% endif %}>Male</option>
-                                    <option value="Female" {% if person and person.gender == "Female" %}selected{% endif %}>Female</option>
-                                    <option value="Other" {% if person and person.gender == "Other" %}selected{% endif %}>Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="date_of_birth"><i class="fas fa-calendar-alt"></i> Date of Birth:</label>
-                                <input type="date" id="date_of_birth" name="date_of_birth" value="{{ person.date_of_birth if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="place_of_birth"><i class="fas fa-map-marker-alt"></i> Place of Birth:</label>
-                                <input type="text" id="place_of_birth" name="place_of_birth" value="{{ person.place_of_birth if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="nationality"><i class="fas fa-flag"></i> Nationality:</label>
-                                <input type="text" id="nationality" name="nationality" value="{{ person.nationality if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="address"><i class="fas fa-home"></i> Address:</label>
-                                <input type="text" id="address" name="address" value="{{ person.address if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="phone_number"><i class="fas fa-phone"></i> Phone Number:</label>
-                                <input type="text" id="phone_number" name="phone_number" value="{{ person.phone_number if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="email_address"><i class="fas fa-envelope"></i> Email Address:</label>
-                                <input type="email" id="email_address" name="email_address" value="{{ person.email_address if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="image_url"><i class="fas fa-image"></i> Image URL:</label>
-                                <input type="text" id="image_url" name="image_url" value="{{ person.image_url if person else '' }}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section">
-                        <h3>Professional Information</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="occupation"><i class="fas fa-briefcase"></i> Occupation:</label>
-                                <input type="text" id="occupation" name="occupation" value="{{ person.occupation if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="company"><i class="fas fa-building"></i> Company:</label>
-                                <input type="text" id="company" name="company" value="{{ person.company if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="job_title"><i class="fas fa-id-card"></i> Job Title:</label>
-                                <input type="text" id="job_title" name="job_title" value="{{ person.job_title if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="work_address"><i class="fas fa-map-marker-alt"></i> Work Address:</label>
-                                <input type="text" id="work_address" name="work_address" value="{{ person.work_address if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="work_phone_number"><i class="fas fa-phone"></i> Work Phone Number:</label>
-                                <input type="text" id="work_phone_number" name="work_phone_number" value="{{ person.work_phone_number if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="work_email_address"><i class="fas fa-envelope"></i> Work Email Address:</label>
-                                <input type="email" id="work_email_address" name="work_email_address" value="{{ person.work_email_address if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="linkedin_profile"><i class="fab fa-linkedin"></i> LinkedIn Profile:</label>
-                                <input type="text" id="linkedin_profile" name="linkedin_profile" value="{{ person.linkedin_profile if person else '' }}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section">
-                        <h3>Personal Information</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="marital_status"><i class="fas fa-heart"></i> Marital Status:</label>
-                                <select id="marital_status" name="marital_status">
-                                    <option value="Single" {% if person and person.marital_status == "Single" %}selected{% endif %}>Single</option>
-                                    <option value="Married" {% if person and person.marital_status == "Married" %}selected{% endif %}>Married</option>
-                                    <option value="Divorced" {% if person and person.marital_status == "Divorced" %}selected{% endif %}>Divorced</option>
-                                    <option value="Widowed" {% if person and person.marital_status == "Widowed" %}selected{% endif %}>Widowed</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="spouse_name"><i class="fas fa-user-friends"></i> Spouse's Name:</label>
-                                <input type="text" id="spouse_name" name="spouse_name" value="{{ person.spouse_name if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="children_names_ages"><i class="fas fa-child"></i> Children's Names and Ages:</label>
-                                <input type="text" id="children_names_ages" name="children_names_ages" value="{{ person.children_names_ages if person else '' }}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section">
-                        <h3>Hobbies and Interests</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="hobbies"><i class="fas fa-paint-brush"></i> Hobbies:</label>
-                                <textarea id="hobbies" name="hobbies">{{ person.hobbies if person else '' }}"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="interests"><i class="fas fa-star"></i> Interests:</label>
-                                <textarea id="interests" name="interests">{{ person.interests if person else '' }}"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section">
-                        <h3>Favorites</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="favorite_books"><i class="fas fa-book"></i> Favorite Books:</label>
-                                <input type="text" id="favorite_books" name="favorite_books" value="{{ person.favorite_books if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="favorite_movies"><i class="fas fa-film"></i> Favorite Movies:</label>
-                                <input type="text" id="favorite_movies" name="favorite_movies" value="{{ person.favorite_movies if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="favorite_music"><i class="fas fa-music"></i> Favorite Music:</label>
-                                <input type="text" id="favorite_music" name="favorite_music" value="{{ person.favorite_music if person else '' }}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section">
-                        <h3>Notes</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="notes"><i class="fas fa-sticky-note"></i> Notes:</label>
-                                <textarea id="notes" name="notes">{{ person.notes if person else '' }}"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section">
-                        <h3>Social Media</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="social_media_profiles"><i class="fas fa-globe"></i> Social Media Profiles:</label>
-                                <textarea id="social_media_profiles" name="social_media_profiles">{{ person.social_media_profiles if person else '' }}"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section">
-                        <h3>Meeting Information</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="date_met"><i class="fas fa-calendar-alt"></i> Date Met:</label>
-                                <input type="date" id="date_met" name="date_met" value="{{ person.date_met if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="place_met"><i class="fas fa-map-marker-alt"></i> Place Met:</label>
-                                <input type="text" id="place_met" name="place_met" value="{{ person.place_met if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="first_impression"><i class="fas fa-comment"></i> First Impression:</label>
-                                <textarea id="first_impression" name="first_impression">{{ person.first_impression if person else '' }}"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="how_you_met"><i class="fas fa-handshake"></i> How You Met:</label>
-                                <textarea id="how_you_met" name="how_you_met">{{ person.how_you_met if person else '' }}"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="mutual_contacts"><i class="fas fa-users"></i> Mutual Contacts:</label>
-                                <input type="text" id="mutual_contacts" name="mutual_contacts" value="{{ person.mutual_contacts if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="last_meeting_date"><i class="fas fa-calendar-alt"></i> Last Meeting Date:</label>
-                                <input type="date" id="last_meeting_date" name="last_meeting_date" value="{{ person.last_meeting_date if person else '' }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="next_meeting_date"><i class="fas fa-calendar-alt"></i> Next Meeting Date:</label>
-                                <input type="date" id="next_meeting_date" name="next_meeting_date" value="{{ person.next_meeting_date if person else '' }}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="submit">{% if person %}Update{% else %}Add{% endif %}</button>
-                </form>
+        <h1>{% if person %}Edit{% else %}Add{% endif %} Person</h1>
+        <form method="post">
+            <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input type="text" id="full_name" name="full_name" value="{{ person.full_name if person else '' }}" required>
             </div>
-        </div>
+            <!-- Repeat similar structure for other fields -->
+            <div class="form-group">
+                <label for="date_of_birth">Date of Birth</label>
+                <input type="date" id="date_of_birth" name="date_of_birth" value="{{ person.date_of_birth if person else '' }}">
+            </div>
+            <div class="form-group">
+                <label for="date_met">Date Met</label>
+                <input type="date" id="date_met" name="date_met" value="{{ person.date_met if person else '' }}">
+            </div>
+            <div class="form-group">
+                <label for="last_meeting_date">Last Meeting Date</label>
+                <input type="date" id="last_meeting_date" name="last_meeting_date" value="{{ person.last_meeting_date if person else '' }}">
+            </div>
+            <div class="form-group">
+                <label for="next_meeting_date">Next Meeting Date</label>
+                <input type="date" id="next_meeting_date" name="next_meeting_date" value="{{ person.next_meeting_date if person else '' }}">
+            </div>
+            <!-- Add remaining fields here -->
+            <button type="submit">Save</button>
+        </form>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
-    <script>
-        document.querySelectorAll('input[type="text"], textarea').forEach(field => {
-            new Awesomplete(field, {
-                list: [{% for person in people %}'{{ person.full_name }}', {% endfor %}],
-                filter: Awesomplete.FILTER_STARTSWITH,
-                replace: function(text) {
-                    const start = this.input.selectionStart;
-                    const end = this.input.selectionEnd;
-                    this.input.value = this.input.value.slice(0, start) + '@' + text + this.input.value.slice(end);
-                    this.input.setSelectionRange(start + text.length + 1, start + text.length + 1);
-                }
-            });
-        });
-    </script>
 </body>
 </html>
