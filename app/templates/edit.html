@@ -1,38 +1,150 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% if person %}Edit{% else %}Add{% endif %} Person</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1>{% if person %}Edit{% else %}Add{% endif %} Person</h1>
-        <form method="post">
-            <div class="form-group">
-                <label for="full_name">Full Name</label>
-                <input type="text" id="full_name" name="full_name" value="{{ person.full_name if person else '' }}" required>
-            </div>
-            <!-- Repeat similar structure for other fields -->
-            <div class="form-group">
-                <label for="date_of_birth">Date of Birth</label>
-                <input type="date" id="date_of_birth" name="date_of_birth" value="{{ person.date_of_birth if person else '' }}">
-            </div>
-            <div class="form-group">
-                <label for="date_met">Date Met</label>
-                <input type="date" id="date_met" name="date_met" value="{{ person.date_met if person else '' }}">
-            </div>
-            <div class="form-group">
-                <label for="last_meeting_date">Last Meeting Date</label>
-                <input type="date" id="last_meeting_date" name="last_meeting_date" value="{{ person.last_meeting_date if person else '' }}">
-            </div>
-            <div class="form-group">
-                <label for="next_meeting_date">Next Meeting Date</label>
-                <input type="date" id="next_meeting_date" name="next_meeting_date" value="{{ person.next_meeting_date if person else '' }}">
-            </div>
-            <!-- Add remaining fields here -->
-            <button type="submit">Save</button>
-        </form>
+{% extends 'base.html' %}
+
+{% block title %}{% if person %}Edit{% else %}Add{% endif %} Person - Personal Person Database{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">{% if person %}Edit{% else %}Add{% endif %} Person</h2>
+<form method="post">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="full_name">Full Name</label>
+            <input type="text" class="form-control" id="full_name" name="full_name" value="{{ person.full_name if person else '' }}" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="nickname">Nickname</label>
+            <input type="text" class="form-control" id="nickname" name="nickname" value="{{ person.nickname if person else '' }}">
+        </div>
     </div>
-</body>
-</html>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="gender">Gender</label>
+            <input type="text" class="form-control" id="gender" name="gender" value="{{ person.gender if person else '' }}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="date_of_birth">Date of Birth</label>
+            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="{{ person.date_of_birth if person else '' }}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="place_of_birth">Place of Birth</label>
+        <input type="text" class="form-control" id="place_of_birth" name="place_of_birth" value="{{ person.place_of_birth if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="nationality">Nationality</label>
+        <input type="text" class="form-control" id="nationality" name="nationality" value="{{ person.nationality if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" class="form-control" id="address" name="address" value="{{ person.address if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="phone_number">Phone Number</label>
+        <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ person.phone_number if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="email_address">Email Address</label>
+        <input type="email" class="form-control" id="email_address" name="email_address" value="{{ person.email_address if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="image_url">Image URL</label>
+        <input type="url" class="form-control" id="image_url" name="image_url" value="{{ person.image_url if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="occupation">Occupation</label>
+        <input type="text" class="form-control" id="occupation" name="occupation" value="{{ person.occupation if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="company">Company</label>
+        <input type="text" class="form-control" id="company" name="company" value="{{ person.company if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="job_title">Job Title</label>
+        <input type="text" class="form-control" id="job_title" name="job_title" value="{{ person.job_title if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="work_address">Work Address</label>
+        <input type="text" class="form-control" id="work_address" name="work_address" value="{{ person.work_address if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="work_phone_number">Work Phone Number</label>
+        <input type="text" class="form-control" id="work_phone_number" name="work_phone_number" value="{{ person.work_phone_number if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="work_email_address">Work Email Address</label>
+        <input type="email" class="form-control" id="work_email_address" name="work_email_address" value="{{ person.work_email_address if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="linkedin_profile">LinkedIn Profile</label>
+        <input type="url" class="form-control" id="linkedin_profile" name="linkedin_profile" value="{{ person.linkedin_profile if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="marital_status">Marital Status</label>
+        <input type="text" class="form-control" id="marital_status" name="marital_status" value="{{ person.marital_status if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="spouse_name">Spouse Name</label>
+        <input type="text" class="form-control" id="spouse_name" name="spouse_name" value="{{ person.spouse_name if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="children_names_ages">Children's Names and Ages</label>
+        <textarea class="form-control" id="children_names_ages" name="children_names_ages">{{ person.children_names_ages if person else '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="hobbies">Hobbies</label>
+        <textarea class="form-control" id="hobbies" name="hobbies">{{ person.hobbies if person else '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="interests">Interests</label>
+        <textarea class="form-control" id="interests" name="interests">{{ person.interests if person else '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="favorite_books">Favorite Books</label>
+        <textarea class="form-control" id="favorite_books" name="favorite_books">{{ person.favorite_books if person else '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="favorite_movies">Favorite Movies</label>
+        <textarea class="form-control" id="favorite_movies" name="favorite_movies">{{ person.favorite_movies if person else '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="favorite_music">Favorite Music</label>
+        <textarea class="form-control" id="favorite_music" name="favorite_music">{{ person.favorite_music if person else '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="notes">Notes</label>
+        <textarea class="form-control" id="notes" name="notes">{{ person.notes if person else '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="social_media_profiles">Social Media Profiles</label>
+        <textarea class="form-control" id="social_media_profiles" name="social_media_profiles">{{ person.social_media_profiles if person else '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="date_met">Date Met</label>
+        <input type="date" class="form-control" id="date_met" name="date_met" value="{{ person.date_met if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="place_met">Place Met</label>
+        <input type="text" class="form-control" id="place_met" name="place_met" value="{{ person.place_met if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="first_impression">First Impression</label>
+        <textarea class="form-control" id="first_impression" name="first_impression">{{ person.first_impression if person else '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="how_you_met">How You Met</label>
+        <textarea class="form-control" id="how_you_met" name="how_you_met">{{ person.how_you_met if person else '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="mutual_contacts">Mutual Contacts</label>
+        <textarea class="form-control" id="mutual_contacts" name="mutual_contacts">{{ person.mutual_contacts if person else '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="last_meeting_date">Last Meeting Date</label>
+        <input type="date" class="form-control" id="last_meeting_date" name="last_meeting_date" value="{{ person.last_meeting_date if person else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="next_meeting_date">Next Meeting Date</label>
+        <input type="date" class="form-control" id="next_meeting_date" name="next_meeting_date" value="{{ person.next_meeting_date if person else '' }}">
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Save</button>
+</form>
+{% endblock %}
